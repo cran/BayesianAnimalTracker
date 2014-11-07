@@ -1,0 +1,11 @@
+cd11d22c88491228fad05778a1db56f4 *DESCRIPTION
+cadb44b1867f62d8f972718ccc625dbf *NAMESPACE
+cdd61b2266d4d1c52629ef98f293681c *R/Base3.r
+80fdd49757fb3c7240bcae7ae14431a6 *R/DataPreparation.r
+a508fd3f49ac07a2f7be47f5a772b878 *R/WrapperFunctions.R
+28361aeea6e41d9c7cf9f6b8de388907 *R/fBase3.r
+8c42425df49b6207ece7075b9926ae4b *R/gBase3.r
+db147e301c8936303b20f0c0ae921cbf *man/BMAnimalTrack.Rd
+8e811503ead73816bf427bbe99e88a98 *man/BMControl.Rd
+a2a700c1098c403dfdf550cca7839396 *man/as.dataList.Rd
+faa153e1595994b9391d45667d0031ac *man/dataSim.Rd
