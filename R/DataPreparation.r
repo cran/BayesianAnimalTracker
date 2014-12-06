@@ -55,11 +55,21 @@ as.dataList <- function(X, Y, Ytime, Xtime=NULL, s2G, timeUnit=1, dUnit=1,
 	
 	if (is.null(Xtime))
 		Xtime <- 1:T
-	Yind <- c(1:T)[Xtime %in% Ytime]
+	Xind <- 1:T	
+	Yind <- Xind[Xtime %in% Ytime]	
 	
-	#Convert the non-numerical time points into numerical
-	Xtime <- 1:T/timeUnit
-	Ytime <- Yind/timeUnit
+	if (any(class(Xtime) %in% c("POSIXlt", "POSIXt")))
+	{	
+		Xtime <- as.numeric(Xtime - Xtime[1])+1
+		Ytime <- Xtime[Yind]
+	}
+	else
+	{
+		Xtime <- Xind
+		Ytime <- Yind
+	}
+	Xtime <- Xtime/timeUnit
+	Ytime <- Ytime/timeUnit
 	
 	R0 <- covBBridge(Ytime)
 	adjVec <- (Ytime - Ytime[1])/(Ytime[K] - Ytime[1])

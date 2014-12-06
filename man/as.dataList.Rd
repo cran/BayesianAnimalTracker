@@ -18,9 +18,9 @@ DR path. The length of it is \code{T}.
 GPS observations.
 }
   \item{Ytime}{
-  The time points where the GPS observations are obtained. It has to be a subset of \code{Xtime}.
+  The time points where the GPS observations are obtained. It has to be a subset of \code{Xtime}. See details for more.
 }
-  \item{Xtime}{The time points where the DR path is obtained. When unspecified taken to be 1:T.
+  \item{Xtime}{The time points where the DR path is obtained. When unspecified taken to be 1:T. See details for more.
 }  
  \item{s2G}{
 The variance of the measurement errors in the GPS observations.
@@ -43,6 +43,8 @@ Logical. Whether to scale the design matrix \code{dMx}. Recommend to be TRUE.
 }
 \details{
 If \code{dMx} is not specified. The \eqn{h(t)} is chosen to be polynomial of order \code{betaOrder}.
+
+For \code{Xtime} and \code{Ytime}, they can either be vectors of POSIXlt/POSIXt time points from \code{\link{strptime}} or character or numeric vectors. But they must be POSIXlt/POSIXt time points when the \code{Xtime} are not regularly spaced. See the example in \code{\link{Trip1}}.
 }
 \value{
 A list of the following values

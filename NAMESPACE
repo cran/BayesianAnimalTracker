@@ -1,1 +1,4 @@
-export(as.dataList, dataSim, BMAnimalTrack, BMControl)
+export(as.dataList, dataSim,
+       DegToKM, KMToDeg,
+       BMAnimalTrack, BMControl)
+import("TrackReconstruction")

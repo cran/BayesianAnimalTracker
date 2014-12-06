@@ -49,24 +49,31 @@ The current version cannot consider multiple initial values for the numerical ma
 }
 \examples{
 set.seed(1)
-#Generating data from our 
+#Generating data from our model
 dlist <- dataSim(T=100, K=10, s2H=1, s2D=0.1, betaVec=c(1))
 gpsObs <- dlist$Y
 gpsTime <- dlist$Ytime
 drPath <- dlist$X
-wlist <- as.dataList(drPath, gpsObs, gpsTime, timeUnit=1, s2G=0.01, dUnit=1, betaOrder=1)
+#Produce the data list required by BMAnimalTrack
+wlist <- as.dataList(drPath, gpsObs, gpsTime, 
+            timeUnit=1, s2G=0.01, dUnit=1, betaOrder=1)
+#Calculate the posterior of eta with our Bayesian Melding approach
 etaMar <- BMAnimalTrack(wlist, BMControl(print=TRUE))
-## Not run: 
+
+\dontrun{
 ## A real data example from package TrackReconstruction.
-#Example from TrackReconstruction package.
-library(TrackReconstruction)
-betas<-Standardize(1,1,-1,1,1,1,-57.8,68.76,-61.8,64.2,-70.16,58.08,
-  -10.1,9.55,-9.75,9.72, -9.91,9.43)
+## Example from TrackReconstruction package.
+## library(TrackReconstruction)
+betas<-Standardize(1,1,-1,1,1,1,-57.8,68.76,-61.8,64.2,
+    -70.16,58.08, -10.1,9.55,-9.75,9.72, -9.91,9.43)
 #get declination and inclination data for study area
 decinc<-c(10.228,65.918)
 #data set with 6 associated GPS fixes in the "gpsdata" data set
 data(rawdata)
-DRoutput<-DeadReckoning(rawdata,betas,decinc,Hz=16,RmL=2,DepthHz=1,SpdCalc=3,MaxSpd=3.5)
+#Perform the Dead-Reckoning of the raw accelerometer and 
+# magnetometer data
+DRoutput<-DeadReckoning(rawdata,betas,decinc,Hz=16,
+            RmL=2,DepthHz=1,SpdCalc=3,MaxSpd=3.5)
 #prepare GPS data
 data(gpsdata02)
 #matching time of the GPS and DR
@@ -90,16 +97,17 @@ ndl <- as.dataList(DRnorthing, GPSnorthing,
     Ytime=gpsformat$DateTime, 
     Xtime=DRworking$DateTime, 
     s2G=0.0625, timeUnit=60, betaOrder=1)
-#Bias Correction and uncertainty characterization
+#Bayesian Melding calculation.
 nEtaMar <- BMAnimalTrack(ndl, BMControl(print=TRUE, returnParam=TRUE))
 		
 #Plots.
-plot(ndl$XMx[,2], ndl$XMx[,1], type="l", col="blue", ylim=c(0, 2.5)) #uncorrected DR path
+plot(ndl$XMx[,2], ndl$XMx[,1], type="l", col="blue", ylim=c(0, 2.5)) 
+#uncorrected DR path
 points(ndl$glist$Gtime, ndl$glist$Y, col="red", pch=16) #GPS points
 lines(ndl$XMx[,2], nEtaMar$etaMar[,1], type="l") #Corrected path
 lines(ndl$XMx[,2], nEtaMar$etaMar[,3], type="l", col="grey70") #Lower bound of CI
 lines(ndl$XMx[,2], nEtaMar$etaMar[,4], type="l", col="grey70") #Upper bound of CI.
-## End(Not run)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
